@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Spawner : MonoSingleton<Spawner>
@@ -11,6 +10,7 @@ public class Spawner : MonoSingleton<Spawner>
     public GameObject NormalOperationToSpawn;
     public GameObject BinaryOperationToSpawn;
     private GameObject GodenOperationToSpawn;
+    private bool binaryOperationsActive = false;
     [Range(1f, 2f)] public float ObjectScale = 1;
 
     public bool isSpawning = false;
@@ -197,8 +197,16 @@ public class Spawner : MonoSingleton<Spawner>
 
     private GameObject GetRandomOperationType()
     {
-        
-        int random = Random.Range(1, 11);
+        int random;
+
+        if (binaryOperationsActive)
+        {
+            random = Random.Range(1, 11);
+        }
+        else
+        {
+            random = Random.Range(1, 9);
+        }
 
         switch (random)
         {
@@ -230,6 +238,16 @@ public class Spawner : MonoSingleton<Spawner>
         }
     }
 
-    
+    public void ToogleBinaryOperations()
+    {
+        if (binaryOperationsActive)
+        {
+            binaryOperationsActive = false;
+        }
+        else
+        {
+            binaryOperationsActive = true;
+        }
+    }
 
 }
